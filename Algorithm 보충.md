@@ -1,6 +1,8 @@
-# DFS with 재귀
+# Algorithm 보충
 
-**problems.kr**
+## DFS with 재귀 (20190917)
+
+**[problems.kr](problems.kr)**
 
 ### BOJ
 
@@ -335,3 +337,157 @@
       res = DFS(row, column, N)
       print('#{} {}'. format(t, res))
   ```
+  
+  
+
+## 조합 생성 (20190919)
+
+### 순열/조합
+
+* 순열/조합 생성 : 백트래킹 이해
+
+* 순열/조합 생성하는 방법(과정) : 재귀호출로
+
+  * 상태 공간 트리 : 재귀 함수 호출 트리
+
+  * 선택의 과정
+
+    ```python
+    # 재귀함수호출트리
+    # 부분 집합을 생성
+    # 원소의 수 = N
+    # N번의 선택을 통해서 부분집합 생성, 각각의 원소에 대해서
+    # 매번 선택할 때의 선택지 : 2
+    path = [0] * 3
+    def subset(k, n):
+        if k == n:
+            print(path)
+            return
+        # 함수호출이 선택이다.
+        path[k] = -1; subset(k + 1, n)
+        path[k] = 1; subset(k + 1, n)
+        
+subset(0,3)
+    ```
+    
+  * 순열 생성 - 모든 순열을 생성하는 과정을 선택의 과정
+  
+    ```python
+    N = 3
+    # 중복순열
+    for i in range(N):
+        for j in range(N):
+            for k in range(N):
+    			print(i, j, k)
+                
+    # 순열
+    visit = [0] * 3
+    for i in range(N):
+        visit[i] = 1
+        for j in range(N):
+            if visit[j]: continue
+                visit[j] = 1
+            for k in range(N):
+    			if visit[k]: continue
+                visit[k] = 1     
+                print(i, j, k)
+                visit[k] = 0
+            visit[j] = 0
+         visit[i] = 0
+    # 같은패턴 반복
+    visit = [0] * 3
+    for i in range(N):
+        if visit[i]: continue
+        visit[i] = 1
+        #-----------------------------
+        for j in range(N):
+            if visit[j]: continue
+                visit[j] = 1
+            #--------------------------
+            for k in range(N):
+    			if visit[k]: continue
+                visit[k] = 1     
+                print(i, j, k)
+                visit[k] = 0
+            #-----------------------------
+            visit[j] = 0
+         #-------------------------
+         visit[i] = 0
+    # 재귀호출 ( 같은패턴 지우기)
+    visit = [0] * 3
+    def perm(k, n):
+        if k == n:
+            return
+        
+    	for i in range(N):
+        	if visit[i]: continue
+        	visit[i] = 1
+     		perm(k + 1, n)
+         	visit[i] = 0
+            
+    perm(0, N)
+    ```
+  
+  * 조합 생성 (`5C3`)
+  
+    ```python
+    arr = 'ABCDE'
+    N = 5
+    for i in range(N):
+        for j in range(i + 1, N):
+            for k in range(j + 1, N):
+    	        print(arr[i], arr[j], arr[k])
+                
+    arr = 'ABCDE'
+    N, R = 5, 3
+    def comb(k, s): # s : 선택할 요소의 시작값
+        if k ==R:
+            print(choose)
+            return
+        
+        for i in range(s, N):
+            choose.append(arr[i])
+            comb(k + 1, i + 1)
+            choose.pop()
+        
+    comb(0, 0)
+    ```
+  
+  * 
+
+### BOJ
+
+#### 1. [N과 M](https://www.acmicpc.net/workbook/view/2052)
+
+##### 1.1 [15649_N과 M(1)](https://www.acmicpc.net/problem/15649)
+
+
+
+#### 2. [2768_블랙잭](https://www.acmicpc.net/problem/2768)
+
+
+
+#### 3. [2309_일곱난쟁이](https://www.acmicpc.net/problem/2309)
+
+
+
+#### 4. [6603_로또](https://www.acmicpc.net/problem/6603)
+
+
+
+#### 5. [3980_선발명단](https://www.acmicpc.net/problem/3980)
+
+
+
+### SWEP
+
+#### 1. [2817_부분수열의 합]()
+
+
+
+#### 2. [2806_N-Queen]()
+
+
+
+
+
