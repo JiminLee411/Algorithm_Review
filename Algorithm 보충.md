@@ -367,6 +367,8 @@
         path[k] = -1; subset(k + 1, n)
         path[k] = 1; subset(k + 1, n)
         
+    ```
+
 subset(0,3)
     ```
     
@@ -461,11 +463,144 @@ subset(0,3)
 
 ##### 1.1 [15649_N과 M(1)](https://www.acmicpc.net/problem/15649)
 
+* **PASS**
 
+  ```python
+  N, M = map(int,input().split())
+  
+  order = []
+  used = [0] * N
+  
+  def perm(k, n, m):
+      if k == m:
+          print(' '.join(order))
+          return
+  
+      for i in range(n):
+          if used[i]: continue
+          used[i] = 1
+          order.append(str(i+1))
+          perm(k + 1, n, m)
+          used[i] = 0
+          order.pop()
+  
+  perm(0, N, M)
+  ```
 
-#### 2. [2768_블랙잭](https://www.acmicpc.net/problem/2768)
+##### 1.2 [15650_N과 M(2)](https://www.acmicpc.net/problem/15650)
 
+* **PASS**
 
+  ```python
+  def perm(k, n, m):
+      if k == m:
+          print(' '.join(order))
+          return
+      for i in range(N):
+          if visit[i] or (order and int(order[-1]) >= i + 1): continue
+          visit[i] = 1
+          order.append(str(i+1))
+          perm(k + 1, n, m)
+          visit[i] = 0
+          order.pop()
+  
+  
+  N, M = map(int, input().split())
+  visit = [0] * N
+  order = []
+  perm(0, N, M)
+  ```
+
+##### 1.3  [15651_N과 M(3)](https://www.acmicpc.net/problem/15651)
+
+* **PASS**
+
+  ```python
+  def perm(k, n, m):
+      if k == m:
+          print(' '.join(order))
+          return
+      for i in range(N):
+          # if order and int(order[-1]) > i + 1: continue
+          order.append(str(i+1))
+          perm(k + 1, n, m)
+          order.pop()
+  
+  N, M = map(int, input().split())
+  order = []
+  perm(0, N, M)
+  ```
+
+##### 1.4  [15652_N과 M(4)](https://www.acmicpc.net/problem/15652)
+
+* **PASS**
+
+  ```python
+  def perm(k, n, m):
+      if k == m:
+          print(' '.join(order))
+          return
+      for i in range(N):
+          if order and int(order[-1]) > i + 1: continue
+          order.append(str(i+1))
+          perm(k + 1, n, m)
+          order.pop()
+  
+  N, M = map(int, input().split())
+  order = []
+  perm(0, N, M)
+  ```
+
+  
+
+#### 2. [2798_블랙잭](https://www.acmicpc.net/problem/2798)
+
+* **PASS** : 재귀
+
+  ```PYTHON
+  RES = 0
+  def Find(k, tmp, n, m):
+      global RES
+      if k == 3:
+          if RES < tmp:
+              RES = tmp
+          return
+      for i in range(N):
+          if visit[i] == 1 or tmp + cards[i] > m: continue
+          visit[i] = 1
+          order.append(cards[i])
+          tmp += cards[i]
+          Find(k + 1, tmp, n, m)
+          visit[i] = 0
+          order.pop()
+          tmp -= cards[i]
+  
+  N, M = map(int, input().split())
+  cards = list(map(int, input().split()))
+  visit = [0] * N
+  order = []
+  tmp = 0
+  Find(0, tmp, N, M)
+  print(RES)
+  ```
+
+* **PASS** : 일반 순열 -> 코드, 시간 단축
+
+  ```python
+  N, M = map(int, input().split())
+  cards = list(map(int, input().split()))
+  
+  res = 0
+  for first in range(N):
+      for second in range(first + 1, N):
+          for third in range(second + 1, N):
+              tmp = cards[first] + cards[second] + cards[third]
+              if res < tmp <= M:
+                  res = tmp
+  print(res)
+  ```
+
+  
 
 #### 3. [2309_일곱난쟁이](https://www.acmicpc.net/problem/2309)
 

@@ -1,14 +1,19 @@
+N, M = map(int,input().split())
 
+order = []
+used = [0] * N
 
-def perm():
-    for i in range(N):
-        if visit[i]: continue
+def perm(k, n, m):
+    if k == m:
+        print(' '.join(order))
+        return
 
-        visit[i] = 1
-        perm(i + 1, N)
-        visit[i] = 0
+    for i in range(n):
+        if used[i]: continue
+        used[i] = 1
+        order.append(str(i+1))
+        perm(k + 1, n, m)
+        used[i] = 0
+        order.pop()
 
-
-N, M = map(int, input().split())
-visit = [0]*N
-
+perm(0, N, M)
