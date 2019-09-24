@@ -367,11 +367,11 @@
         path[k] = -1; subset(k + 1, n)
         path[k] = 1; subset(k + 1, n)
         
+    subset(0,3)
     ```
 
-subset(0,3)
-    ```
-    
+
+
   * 순열 생성 - 모든 순열을 생성하는 과정을 선택의 과정
   
     ```python
@@ -455,7 +455,8 @@ subset(0,3)
     comb(0, 0)
     ```
   
-  * 
+
+
 
 ### BOJ
 
@@ -604,7 +605,36 @@ subset(0,3)
 
 #### 3. [2309_일곱난쟁이](https://www.acmicpc.net/problem/2309)
 
+* **틀렸습니다**
 
+  ```python
+  res = 0
+  def perm(i, num):
+      global res
+      visit[i] = 1
+  
+      if num == 7:
+          for i in sorted(cnt):
+              print(i)
+          return 1
+  
+      for j in range(9):
+          if res == 1: break
+          if visit[j] or sum(cnt) + smallMen[j] > 100:
+              continue
+          cnt.append(smallMen[i])
+          res = perm(j, num + 1)
+          if res == 1: break
+          cnt.pop()
+          visit[j] = 0
+  
+  smallMen = [ int(input()) for _ in range(9)]
+  visit = [0 for _ in range(9)]
+  cnt = []
+  perm(0, 0)
+  ```
+
+  
 
 #### 4. [6603_로또](https://www.acmicpc.net/problem/6603)
 
