@@ -454,7 +454,7 @@
         
     comb(0, 0)
     ```
-  
+
 
 
 
@@ -648,7 +648,55 @@
 
 #### 1. [2817_부분수열의 합]()
 
+* **FAIL** : 같은 수열의 합이 2번씩 반복.
 
+  ```python
+  def sumNum(tmp, used):
+      global cnt
+      if tmp == K:
+          cnt += 1
+          return
+      for i in range(N):
+          if used & 1<<i:
+              continue
+          res.append(arr[i])
+          sumNum(tmp + arr[i], used|1<<i)
+          res.pop()
+  
+  for tc in range(1, int(input()) + 1):
+      N, K = map(int, input().split())
+      arr = list(map(int, input().split()))
+      res = []
+      cnt = 0
+      sumNum(0, 0)
+      print('#{} {}'. format(tc, cnt))
+  ```
+
+* **PASS** : for문이 시작하는 부분을 만들어 준다.
+
+  ```python
+  def sumNum(k, tmp, used):
+      global cnt
+      if tmp == K:
+          cnt += 1
+          return
+      for i in range(k, N):
+          if used & 1<<i:
+              continue
+          res.append(arr[i])
+          sumNum(i+1, tmp + arr[i], used|1<<i)
+          res.pop()
+  
+  for tc in range(1, int(input()) + 1):
+      N, K = map(int, input().split())
+      arr = list(map(int, input().split()))
+      res = []
+      cnt = 0
+      sumNum(0, 0, 0)
+      print('#{} {}'. format(tc, cnt))
+  ```
+
+  
 
 #### 2. [2806_N-Queen]()
 
