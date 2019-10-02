@@ -696,11 +696,78 @@
       print('#{} {}'. format(tc, cnt))
   ```
 
+
+
+
+
+
+## BFS(Breadth First Search)
+
+> 탐색 시작점의 인접 정점들을 다 찾은 후, 찾은 정점을 시작점으로 하여 다시 인접 정접을 찾는다.
+>
+> -> 최단 경로 보장 X
+
+```python
+# 너비 우선 탐색
+# 필요한 것들
+# 1. 그래프 2. 큐 3. 방문 정보
+# 정점, 간선의 수
+# 정점을 구분하기 위한 식별값 --> 정점수가 V개라면 1 ~ V 의 번호를 부여하여 정점들 구분
+# 따라서, 하나의 간선은 (정점번호, 정점번호)
+import collections
+
+V, E = map(int, input().split())	# V:정점수, E:간선수
+G = [[] for _ in range(V + 1)]
+for _ in range(E):
+    u, v = map(int, input().split())
+    G[u].append(v)
+    G[v].append(u)
+    
+Q = collections.deque()
+visit = [False] * (V + 1)
+
+# 시작점을 먼저 방문하고 큐에 삽입
+Q.append(1); visit[1] = True; print(1, end=' ')
+# 빈 큐가 아닐동안
+while Q:
+	# 큐에서 정점(v)을 하나 꺼내온다.
+    v = Q.popleft()
+    # v의 인접 정점(w)을 하나씩 찾아서
+    for w in G[v]:
+    	# w를 방문하지 않았다면 방문하고, w를 큐에 삽입
+        if not visit[w]:
+            Q.append(w); visit[w] = True;
+```
+
+* 최단 경로까지 확장
+
+  ```python
+  # P, D = [], []		P = 최단 경로 트리를 저장(부모)
+  import collections
   
+  V, E = map(int, input().split())	# V:정점수, E:간선수
+  G = [[] for _ in range(V + 1)]
+  for _ in range(E):
+      u, v = map(int, input().split())
+      G[u].append(v)
+      G[v].append(u)
+      
+  Q = collections.deque()
+  visit = [False] * (V + 1)
+  P, D = [0] * (V + 1), [0] * (V + 1)
+  
+  # 시작점을 먼저 방문하고 큐에 삽입
+  Q.append(1); visit[1] = True; print(1, end=' ')
+  # 빈 큐가 아닐동안
+  while Q:
+      v, d = Q.popleft()
+      if v == target:
+          break
+      for w in G[v]:
+          if not visit[w]:
+              Q.append((w, d + 1)); visit[w] = True;
+              D[w] = D[v] + 1	# 시작점에서 바로 전에 방문한 저점까지 최단거리 + 1
+              P[w] = v		# 바로 전에 방문한 정점을 저장
+  ```
 
-#### 2. [2806_N-Queen]()
-
-
-
-
-
+  
